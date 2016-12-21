@@ -16,7 +16,7 @@
 ; Teilaufgabe 1.1
 ;
 ; Eine Funktion wird als Funktion höherer Ordnung bezeichnet, wenn sie selber Funktionen als Parameter
-; annimmt, oder eine Funktion zurück geben kann
+; annimmt, oder eine Funktion zurück gibt.
 ;
 ; 
 ; Teilaufgabe 1.2
@@ -30,14 +30,14 @@
 ; masala ist eine Funktion höherer Ordnung, da der erste Parameter als Funktion verwendet wird, (und
 ; zusätlich auch noch der Rückgabewert eine Funktion ist)
 ;
-; flip ist eine Funktion höherer Ordnung, da der erste Parameter als Funktio verwendet wird, und sie
-; zusätlich eine Funktion zurück gibt.
+; flip ist eine Funktion höherer Ordnung, da der erste Parameter als Funktion verwendet wird, und sie
+; zusätzlich eine Funktion zurück gibt.
 ;
 ;
 ; Teilaufgabe 1.3
 ;
 ; Bei Ausführung der Funktion masala zum Beispiel über den Aufruf (masala / 1), wird über den Lambda-
-; Ausdruck intern eine anonyme Funktion erstellt, in welcher Variablen verwendet werden, die sich zu
+; Ausdruck intern eine "anonyme" Funktion erstellt, in welcher Variablen verwendet werden, die sich zu
 ; diesem Zeitpunkt in der lokalen Umgebung befinden. Nachdem die Auswertung von masala nun
 ; abgeschlossen wurde, würde die lokale Umgebung nun eigentlich "aufgelöst" werden, bleibt jedoch
 ; tatsächlich aufgrund des funtionalen Abschlusses für die zurückgegebene Funktion erhalten, damit
@@ -62,9 +62,9 @@
 ; > (map (flip cons) '(1 2 3) '(3 2 1))
 ; Ein einfaches (map cons ...) würde immer das ein Element aus der ersten Liste nehmen, jeweils das
 ; entsprechende aus der zweiten Liste (gleicher Index), und somit die Pairs '(1 . 3) usw. bilden.
-; Das flip erstellt jedoch eine Funktion, in der die beiden Parameter in vertauschter Reihenfolge auf
+; Das flip gibt jedoch eine Funktion, in der die beiden Parameter in vertauschter Reihenfolge auf
 ; die gegebene Funktion (cons) angewandt werden. Dies hat zu Folge, dass die Elemente der Pairs
-; jeweils vertauscht sind. Der Rückgabewert ist somit '((3 . 1) (2 . 2) (1 . 3)).
+; jeweils vertauscht werden. Der Rückgabewert ist somit '((3 . 1) (2 . 2) (1 . 3)).
 ;
 ; > (filter list? '((a b) () 1 (())))
 ; Filter reduziert die gegebene Liste auf die Elemente, die die Prädikatsfunktion an erster Stelle
@@ -77,16 +77,16 @@
 ;        '(9941 212 32 -459.67))
 ; map bildet jedes Element einer Liste entsprechend der an erster Stelle gegebenen Funktion ab, und
 ; gibt eine Liste mit den Ergebnissen all dieser Abbildungen zurück. Die Funktion, die map an dieser
-; Stelle mitgegeben wird, setzt sich wiederum aus zwei anderen Funktionen zusammen. Die erste dieser
+; Stelle mitgegeben wird, setzt sich hierbei aus zwei anderen Funktionen zusammen. Die erste dieser
 ; beiden Funktionen wird durch curryr gebildet, was in diesem konkreten Fall eine Funktion basierend
-; auf / ist, an die jedoch zusätlich zu den jeweils gegebenen einen Paramerter von dem Wert 1.8
+; auf / ist, an die dann zusätlich zu den jeweils aktuellen Parametern auch noch den Wert 1.8 (rechts)
 ; anhängt. Dies hat den Effekt, dass zusätzlich immer noch durch 1.8 geteilt wird.
 ; Die zweite Funktion hingegen basiert auf der - Funktion, und als erster Parameter wird immer der
 ; Wert 32 genutzt. Ein Aufruf von ((curry - 32) 1 2 3) würde somit zu (- 32 1 2 3) -> 26 übersetzt
 ; werden. Diese beiden Funktionen werden zusätlich noch über compose verbunden, was eine Hinter-
 ; einanderschaltung zur Folge hat, wobei zuerst die - 32 Funktion aufgerufen wird, und ihr Rückgabe-
 ; wert im Anschluss als Parameter für die / 1.8 Funktion verwendet wird. Das gesamte Konstrukt ist
-; somit für einen Parameter also Äquivalent zu dem Ausdruck
+; somit für einen einzigen Parameter also Äquivalent zu dem Ausdruck
 ; (lamda (x) (/ (- 32 x) 1.8))
 ; Bei der ersten tatsächlichen Auswertung mit dem Parameter 9941 wird also (- 32 9941) -> -9909
 ; berechnet, und dieser Wert im Anschluss in (/ -9909 1.8) -> -5505.0 wiederverwendet.
@@ -108,7 +108,7 @@
 ; > (apply + (filter (cojoin even? (curryr > 3)) xs))
 ;
 ; 4. Anhand eines Prädikates (z.B. odd?) in zwei Teillisten aufspalten:
-; (cons (filter odd? xs) (list (filter (negate odd?) xs)))
+; > (list (filter odd? xs) (filter (negate odd?) xs))
 ;
 ;
 ; Aufgabe 3
